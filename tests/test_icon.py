@@ -12,8 +12,8 @@ class IconTests(unittest.TestCase):
         bbox = alpha.getbbox()
 
         self.assertIsNotNone(bbox)
-        self.assertIn(bbox[2] - bbox[0], range(121, 125))
-        self.assertIn(bbox[3] - bbox[1], range(117, 122))
+        self.assertIn(bbox[2] - bbox[0], range(125, 129))
+        self.assertIn(bbox[3] - bbox[1], range(121, 125))
         opaque_pixels = sum(value >= 128 for value in alpha.get_flattened_data())
         self.assertLess(opaque_pixels, image.width * image.height * 0.6)
 

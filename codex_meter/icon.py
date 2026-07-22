@@ -10,8 +10,8 @@ from PIL import Image, ImageChops, ImageOps
 logger = logging.getLogger(__name__)
 
 _RENDER_SIZE = 128
-_GLYPH_FRACTION = 0.82
-_GLYPH_FRACTION_TRAY = 0.96
+_GLYPH_FRACTION = 0.80
+_GLYPH_FRACTION_TRAY = 1.0
 _TEMPLATE_INK = (0, 0, 0, 255)
 
 
