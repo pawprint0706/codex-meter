@@ -1,0 +1,5 @@
+The repository-root favicon.ico is the official ChatGPT site icon obtained from:
+https://chatgpt.com/favicon.ico
+
+ChatGPT, OpenAI, and the logo are trademarks of OpenAI. The asset is included
+only to identify the OpenAI service monitored by this independent utility.

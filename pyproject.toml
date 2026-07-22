@@ -1,0 +1,25 @@
+[project]
+name = "codex-meter"
+version = "1.0.0"
+description = "System tray monitor for ChatGPT Codex weekly usage and reset credits"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "keyring>=25.0.0",
+    "Pillow>=10.0.0",
+    "pystray>=0.19.0",
+    "requests>=2.31.0",
+]
+
+[project.scripts]
+codex-meter = "codex_meter.__main__:main"
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.package-data]
+codex_meter = ["assets/*"]
+
+[tool.setuptools.data-files]
+"share/codex-meter" = ["favicon.ico"]
