@@ -1,7 +1,8 @@
 from datetime import datetime, timedelta, timezone
 import os
+from types import SimpleNamespace
 import unittest
-from unittest.mock import patch
+from unittest.mock import PropertyMock, patch
 
 from tests._support import install_keyring_stub, install_pystray_stub
 
@@ -87,6 +88,46 @@ class FormattingTests(unittest.TestCase):
             open_browser.call_args_list[1].args[0],
             "https://chatgpt.com/codex/cloud/settings/analytics",
         )
+
+    def test_refresh_interval_has_one_separator_when_logged_in_or_out(self):
+        class FakeMenu:
+            SEPARATOR = object()
+
+            def __init__(self, *items):
+                self.items = items
+
+        class FakeItem:
+            def __init__(self, text, *_args, **_kwargs):
+                self.text = text
+
+        app = object.__new__(tray.CodexMeterApp)
+        app.cfg = SimpleNamespace(refresh_interval=10)
+        app.usage = None
+        app.status = "Ready"
+        app._device_code = None
+        app._login_in_progress = False
+
+        for logged_in in (True, False):
+            with patch.object(tray.pystray, "Menu", FakeMenu), patch.object(
+                tray.pystray, "MenuItem", FakeItem
+            ), patch.object(
+                tray.CodexMeterApp,
+                "is_logged_in",
+                new_callable=PropertyMock,
+                return_value=logged_in,
+            ), patch.dict(os.environ, {"CODEX_METER_LANG": "en"}):
+                items = app._menu_items()
+
+            interval_index = next(
+                index
+                for index, item in enumerate(items)
+                if isinstance(item, FakeItem) and item.text == "Refresh Interval"
+            )
+            self.assertIs(items[interval_index - 1], FakeMenu.SEPARATOR)
+            self.assertFalse(any(
+                left is FakeMenu.SEPARATOR and right is FakeMenu.SEPARATOR
+                for left, right in zip(items, items[1:])
+            ))
 
 
 if __name__ == "__main__":

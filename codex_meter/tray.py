@@ -177,6 +177,7 @@ class CodexMeterApp:
                     self._open_analytics_page,
                 )
             )
+            items.append(pystray.Menu.SEPARATOR)
         items.append(
             pystray.MenuItem(
                 tr("새로고침 주기", "Refresh Interval"),
